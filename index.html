@@ -1,402 +1,193 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Моя мать — мама</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Иван лох</title>
 
-    html, body {
-      height: 100%;
-      overflow: hidden;
-      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(255, 0, 128, 0.22), transparent 40%),
-        radial-gradient(circle at 80% 30%, rgba(0, 200, 255, 0.18), transparent 45%),
-        radial-gradient(circle at 50% 90%, rgba(255, 200, 0, 0.15), transparent 45%),
-        linear-gradient(135deg, #0b0714 0%, #15102a 45%, #090b1a 100%);
-      color: #fff;
-    }
+<!-- Нестандартные шрифты с поддержкой кириллицы -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik+Glitch&family=Russo+One&display=swap" rel="stylesheet">
 
-    #fx {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 1;
-    }
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; overflow: hidden; }
 
-    .hearts {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 0;
-    }
+  /* ФОН, МИГАЮЩИЙ ВСЕМИ ЦВЕТАМИ РАДУГИ */
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Rubik Glitch', cursive;
+    animation: rainbow 0.9s linear infinite;
+    user-select: none;
+  }
 
-    .heart {
-      position: absolute;
-      bottom: -40px;
-      opacity: 0;
-      animation: floatUp linear infinite;
-      filter: drop-shadow(0 0 8px rgba(255, 80, 160, 0.7));
-    }
+  @keyframes rainbow {
+    0%   { background: #ff0000; }
+    14%  { background: #ff8800; }
+    28%  { background: #ffee00; }
+    42%  { background: #00ff44; }
+    57%  { background: #00ccff; }
+    71%  { background: #3300ff; }
+    85%  { background: #cc00ff; }
+    100% { background: #ff0000; }
+  }
 
-    @keyframes floatUp {
-      0% {
-        transform: translateY(0) rotate(0deg) scale(0.7);
-        opacity: 0;
-      }
-      10% {
-        opacity: 0.9;
-      }
-      90% {
-        opacity: 0.6;
-      }
-      100% {
-        transform: translateY(-120vh) rotate(360deg) scale(1.15);
-        opacity: 0;
-      }
-    }
+  /* ГЛАВНАЯ НАДПИСЬ */
+  h1 {
+    font-family: 'Rubik Glitch', cursive;
+    font-size: clamp(2.5rem, 11vw, 9rem);
+    color: #ffffff;
+    text-align: center;
+    letter-spacing: 0.05em;
+    text-shadow:
+      0 0 10px #000,
+      0 0 25px #000,
+      0 0 45px #fff,
+      0 0 80px #fff;
+    animation: wobble 1.2s ease-in-out infinite;
+  }
 
-    .content {
-      position: relative;
-      z-index: 2;
-      min-height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-    }
+  @keyframes wobble {
+    0%, 100% { transform: rotate(-1.5deg) scale(1); }
+    50%      { transform: rotate(1.5deg) scale(1.05); }
+  }
 
-    .card {
-      width: min(760px, 94vw);
-      padding: clamp(28px, 6vw, 64px);
-      text-align: center;
-      border-radius: 32px;
-      background: rgba(255, 255, 255, 0.07);
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      box-shadow:
-        0 0 0 1px rgba(255, 255, 255, 0.04) inset,
-        0 30px 90px rgba(0, 0, 0, 0.5),
-        0 0 80px rgba(255, 0, 140, 0.12);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      animation: cardIn 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) both;
-    }
+  /* КНОПКИ */
+  .buttons {
+    display: flex;
+    gap: 18px;
+    margin-top: 50px;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0 15px;
+  }
 
-    @keyframes cardIn {
-      from {
-        opacity: 0;
-        transform: translateY(30px) scale(0.96);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
+  button {
+    font-family: 'Russo One', sans-serif;
+    font-size: clamp(0.9rem, 2vw, 1.2rem);
+    padding: 16px 30px;
+    border: 3px solid #fff;
+    border-radius: 16px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    cursor: pointer;
+    transition: transform 0.12s ease, background 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+  }
 
-    .badge {
-      display: inline-block;
-      padding: 8px 16px;
-      margin-bottom: 22px;
-      font-size: 13px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: #ffd6ea;
-      border: 1px solid rgba(255, 120, 190, 0.45);
-      border-radius: 999px;
-      background: rgba(255, 80, 160, 0.12);
-      box-shadow: 0 0 24px rgba(255, 80, 160, 0.15);
-    }
+  button:hover {
+    background: #000;
+    transform: scale(1.1) rotate(-2deg);
+    box-shadow: 0 0 30px #fff;
+  }
 
-    h1 {
-      font-size: clamp(38px, 8vw, 86px);
-      line-height: 1.05;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      background: linear-gradient(90deg, #fff, #ffd1e8, #9ee7ff, #fff);
-      background-size: 300% 100%;
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      animation: shimmer 6s linear infinite;
-      text-shadow: 0 0 40px rgba(255, 120, 200, 0.18);
-    }
+  button:active {
+    transform: scale(0.92);
+  }
 
-    h1 span {
-      display: inline-block;
-      color: transparent;
-      background: linear-gradient(90deg, #ff5fb2, #ffd36e, #69e6ff, #ff5fb2);
-      background-size: 300% 100%;
-      -webkit-background-clip: text;
-      background-clip: text;
-      animation: shimmer 4s linear infinite;
-    }
+  /* ОВЕРЛЕЙ С КАКАШКОЙ */
+  #overlay {
+    position: fixed;
+    inset: 0;
+    display: none;
+    flex-direction: column;
+    background: #3b1f08;
+    z-index: 100;
+    cursor: pointer;
+  }
 
-    @keyframes shimmer {
-      to {
-        background-position: 300% 0;
-      }
-    }
+  #overlay.show { display: flex; }
 
-    p {
-      margin-top: 20px;
-      font-size: clamp(16px, 2.5vw, 22px);
-      color: rgba(255, 255, 255, 0.78);
-      line-height: 1.5;
-      letter-spacing: 0.01em;
-    }
+  #poop {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: min(60vh, 60vw);
+    line-height: 1;
+    animation: pop 0.35s cubic-bezier(0.2, 1.6, 0.5, 1);
+  }
 
-    .button {
-      margin-top: 34px;
-      padding: 16px 30px;
-      font-size: 17px;
-      font-weight: 700;
-      color: #1a0712;
-      cursor: pointer;
-      border: 0;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #ffd36e, #ff7ab8 55%, #7ce7ff);
-      box-shadow:
-        0 10px 30px rgba(255, 100, 180, 0.35),
-        0 0 0 1px rgba(255, 255, 255, 0.25) inset;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
-      animation: pulseButton 2.4s ease-in-out infinite;
-    }
+  @keyframes pop {
+    from { transform: scale(0) rotate(-90deg); opacity: 0; }
+    to   { transform: scale(1) rotate(0deg);   opacity: 1; }
+  }
 
-    .button:hover {
-      transform: translateY(-3px) scale(1.03);
-      filter: brightness(1.08);
-      box-shadow:
-        0 16px 44px rgba(255, 100, 180, 0.48),
-        0 0 0 1px rgba(255, 255, 255, 0.35) inset;
-    }
+  /* ЛЕНТА НОВОСТЕЙ */
+  .ticker {
+    height: 70px;
+    background: #000;
+    border-top: 5px solid #ffee00;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+  }
 
-    .button:active {
-      transform: translateY(0) scale(0.98);
-    }
+  .ticker__inner {
+    display: inline-block;
+    font-family: 'Russo One', sans-serif;
+    font-size: clamp(1.1rem, 3vw, 1.6rem);
+    color: #00ff44;
+    text-shadow: 0 0 10px #00ff44;
+    animation: marquee 12s linear infinite;
+  }
 
-    @keyframes pulseButton {
-      0%, 100% {
-        box-shadow:
-          0 10px 30px rgba(255, 100, 180, 0.35),
-          0 0 0 1px rgba(255, 255, 255, 0.25) inset;
-      }
-      50% {
-        box-shadow:
-          0 12px 44px rgba(120, 230, 255, 0.45),
-          0 0 0 1px rgba(255, 255, 255, 0.35) inset;
-      }
-    }
-
-    @media (max-width: 520px) {
-      .card {
-        border-radius: 24px;
-      }
-
-      .button {
-        width: 100%;
-        padding: 15px 20px;
-      }
-    }
-  </style>
+  @keyframes marquee {
+    from { transform: translateX(100vw); }
+    to   { transform: translateX(-100%); }
+  }
+</style>
 </head>
+
 <body>
-  <div class="hearts" id="hearts"></div>
-  <canvas id="fx"></canvas>
 
-  <main class="content">
-    <section class="card">
-      <div class="badge">Праздничная открытка</div>
-      <h1>Моя мать — <span>мама</span></h1>
-      <p>Самая родная, любимая и лучшая. Пусть каждый день будет немного праздником ✨</p>
-      <button class="button" id="boom">🎆 Запустить салют</button>
-    </section>
-  </main>
+  <h1>ИВАН ЛОХ</h1>
 
-  <script>
-    // ===== Парящие сердечки =====
-    const heartsContainer = document.getElementById("hearts");
-    const heartSymbols = ["❤️", "💖", "💗", "✨", "💫", "🌸"];
+  <div class="buttons">
+    <button data-act="1">Кнопка 1</button>
+    <button data-act="2">Кнопка 2</button>
+    <button data-act="3">Кнопка 3</button>
+    <button data-act="4">Кнопка 4</button>
+  </div>
 
-    for (let i = 0; i < 18; i++) {
-      const heart = document.createElement("span");
-      heart.className = "heart";
-      heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.fontSize = 14 + Math.random() * 26 + "px";
-      heart.style.animationDuration = 9 + Math.random() * 12 + "s";
-      heart.style.animationDelay = -Math.random() * 20 + "s";
-      heartsContainer.appendChild(heart);
-    }
+  <!-- Оверлей: какашка + бегущая строка -->
+  <div id="overlay">
+    <div id="poop">💩</div>
+    <div class="ticker">
+      <div class="ticker__inner" id="tickerText"></div>
+    </div>
+  </div>
 
-    // ===== Canvas: конфетти и салют =====
-    const canvas = document.getElementById("fx");
-    const ctx = canvas.getContext("2d");
+<script>
+  const overlay = document.getElementById('overlay');
+  const tickerText = document.getElementById('tickerText');
 
-    let W = 0;
-    let H = 0;
-    let particles = [];
+  const MESSAGE = 'ЭТО МЕСТЬ ЗА МОЮ МАМУ';
+  // повторяем текст, чтобы лента шла непрерывно
+  tickerText.textContent = Array(12).fill(MESSAGE).join('   ★   ') + '   ★   ';
 
-    function resize() {
-      W = canvas.width = window.innerWidth * window.devicePixelRatio;
-      H = canvas.height = window.innerHeight * window.devicePixelRatio;
-      canvas.style.width = window.innerWidth + "px";
-      canvas.style.height = window.innerHeight + "px";
-      ctx.setTransform(window.devicePixelRatio, 0, 0, window.devicePixelRatio, 0, 0);
-      W = window.innerWidth;
-      H = window.innerHeight;
-    }
-
-    window.addEventListener("resize", resize);
-    resize();
-
-    function rand(min, max) {
-      return Math.random() * (max - min) + min;
-    }
-
-    function addConfetti(count = 1) {
-      const colors = ["#ff5fb2", "#ffd36e", "#69e6ff", "#b28bff", "#7dffb2", "#ffffff"];
-
-      for (let i = 0; i < count; i++) {
-        particles.push({
-          type: "confetti",
-          x: rand(0, W),
-          y: rand(-80, -10),
-          vx: rand(-0.8, 0.8),
-          vy: rand(1.2, 3.6),
-          gravity: 0.025,
-          size: rand(4, 9),
-          color: colors[Math.floor(Math.random() * colors.length)],
-          rotation: rand(0, Math.PI * 2),
-          rotSpeed: rand(-0.12, 0.12),
-          life: 1,
-          decay: 0.0025
-        });
-      }
-    }
-
-    function addFirework(x, y) {
-      const hue = rand(0, 360);
-      const count = 70 + Math.floor(rand(0, 50));
-      const speedBase = rand(2.2, 4.8);
-
-      for (let i = 0; i < count; i++) {
-        const angle = rand(0, Math.PI * 2);
-        const speed = speedBase * rand(0.35, 1.15);
-
-        particles.push({
-          type: "firework",
-          x,
-          y,
-          vx: Math.cos(angle) * speed,
-          vy: Math.sin(angle) * speed,
-          gravity: 0.045,
-          friction: 0.985,
-          size: rand(1.2, 2.8),
-          color: `hsl(${hue + rand(-35, 35)}, 100%, ${rand(55, 75)}%)`,
-          life: 1,
-          decay: rand(0.012, 0.022)
-        });
-      }
-
-      // Яркая вспышка в центре
-      for (let i = 0; i < 14; i++) {
-        particles.push({
-          type: "spark",
-          x,
-          y,
-          vx: rand(-1.2, 1.2),
-          vy: rand(-1.2, 1.2),
-          gravity: 0,
-          friction: 0.94,
-          size: rand(2, 4),
-          color: "#ffffff",
-          life: 1,
-          decay: 0.04
-        });
-      }
-    }
-
-    function autoFirework() {
-      addFirework(rand(W * 0.15, W * 0.85), rand(H * 0.12, H * 0.55));
-    }
-
-    document.getElementById("boom").addEventListener("click", () => {
-      addFirework(W * 0.5, H * 0.35);
-      setTimeout(() => addFirework(W * 0.22, H * 0.42), 180);
-      setTimeout(() => addFirework(W * 0.78, H * 0.28), 360);
-      setTimeout(() => addFirework(W * 0.62, H * 0.5), 540);
-      addConfetti(70);
+  // любая из четырёх кнопок вызывает одно и то же
+  document.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      overlay.classList.add('show');
+      // перезапуск анимации появления какашки
+      const poop = document.getElementById('poop');
+      poop.style.animation = 'none';
+      void poop.offsetWidth;
+      poop.style.animation = '';
     });
+  });
 
-    // Автосалют
-    setInterval(autoFirework, 1600);
-    setTimeout(autoFirework, 500);
+  // клик по оверлею — закрыть
+  overlay.addEventListener('click', () => {
+    overlay.classList.remove('show');
+  });
+</script>
 
-    // Постоянное конфетти
-    setInterval(() => addConfetti(2), 120);
-
-    function drawParticle(p) {
-      ctx.save();
-      ctx.globalAlpha = Math.max(0, p.life);
-
-      if (p.type === "confetti") {
-        ctx.translate(p.x, p.y);
-        ctx.rotate(p.rotation);
-        ctx.fillStyle = p.color;
-        ctx.shadowColor = p.color;
-        ctx.shadowBlur = 8;
-        ctx.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2);
-      } else {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.shadowColor = p.color;
-        ctx.shadowBlur = p.type === "spark" ? 22 : 12;
-        ctx.fill();
-      }
-
-      ctx.restore();
-    }
-
-    function animate() {
-      ctx.clearRect(0, 0, W, H);
-
-      for (let i = particles.length - 1; i >= 0; i--) {
-        const p = particles[i];
-
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vy += p.gravity;
-        p.vx *= p.friction ?? 1;
-        p.vy *= p.friction ?? 1;
-        p.life -= p.decay;
-
-        if (p.type === "confetti") {
-          p.rotation += p.rotSpeed;
-        }
-
-        if (p.life <= 0 || p.y > H + 60 || p.x < -80 || p.x > W + 80) {
-          particles.splice(i, 1);
-          continue;
-        }
-
-        drawParticle(p);
-      }
-
-      requestAnimationFrame(animate);
-    }
-
-    animate();
-  </script>
 </body>
 </html>
